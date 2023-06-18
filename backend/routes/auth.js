@@ -2,10 +2,16 @@
 const User = require('../models/User');
 const express = require('express');
 const { body, validationResult } = require('express-validator');
-
+const bcrypt = require('bcryptjs');
 const router = express.Router();
+const jwt = require("jsonwebtoken");
 
-router.post('/', [
+// Define your JWT secret key
+const JWT_SECRET = "MySecretKey123!";
+
+
+// localhost:5000/api/auth/createuser
+router.post('/createuser', [
   body('email').isEmail(),
   body('name').isLength({ min: 3 }),
   body('password').isLength({ min: 5 })
@@ -28,18 +34,30 @@ router.post('/', [
     if (use) {
         return res.status(400).json({ error: 'This username already exists. Please try with something else ' });
       }
+      //Hashing password with salr & pepper
+      const salt = await bcrypt.genSalt(10);
+      const secPass = await bcrypt.hash(password,salt);
 
     // Create a new user
     user = new User({
       name,
       email,
-      password
+      password: secPass
     });
 
     // Save the user to the database
     await user.save();
+    //JWT Auth
+    const data = {
+        user:{
+            id:user.id
+        }
+    }
+    const authToken = jwt.sign(data,JWT_SECRET);
+    
+    res.json({authToken});
 
-    res.json(user);
+
   } catch (error) {
     console.error(error);
     res.status(500).send('Server Error');
