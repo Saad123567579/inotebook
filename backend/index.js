@@ -1,13 +1,13 @@
 // index.js
 const connectToMongo = require('./db');
-connectToMongo();
 const express = require('express')
+connectToMongo();
 const app = express()
 
-const port = 3000
+const port = 3001
 
 app.get('/', (req, res) => {
-  res.send('Hello world!')
+  res.send('Hello world')
 })
 
 app.listen(port, () => {
