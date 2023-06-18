@@ -1,15 +1,90 @@
-// index.js
+//index.js
+
 const connectToMongo = require('./db');
-const express = require('express')
+const express = require('express');
+const app = express();
 connectToMongo();
-const app = express()
+const port =  3000;
 
-const port = 3001
+let server;
+app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('Hello world')
-})
+// Routes
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/notes', require('./routes/notes'));
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+server = app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
+});
+
+process.on('SIGINT', () => {
+  server.close(() => {
+    console.log('Server has been gracefully terminated');
+    process.exit(0);
+  });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const connectToMongo = require('./db');
+// const express = require('express');
+// const app = express();
+// connectToMongo();
+// const port = process.env.PORT || 3000;
+
+// let server; 
+
+
+// // app.get('/', (req, res) => {
+// //   res.send('Hello world');
+// // });
+
+// app.use('/api/auth',require('./routes/auth'));
+// // app.use('/api/notes',require('./routes/notes'));
+
+
+// server = app.listen(port, () => {
+//   console.log(`Example app listening on port ${port}`);
+// });
+
+// server.close(() => {
+//     console.log('Server has been gracefully terminated');
+//     process.exit(0);
+//   });
+
+
+
+  // Declare the server variable
+// process.on('SIGINT', () => {
+//     server.close(() => {
+//       console.log('Server has been gracefully terminated');
+//       process.exit(0);
+//     });
+//   });
