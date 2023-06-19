@@ -1,26 +1,37 @@
-import React from 'react'
-
+import React,{useState,useContext} from 'react';
+import Note from './Note';
+import noteContext from '../context/Notes/noteContext';
 function Home() {
-  return (
-    <div className="container" style={{alignItems:"center",justifyContent:"center"}}>
-      <h1 style={{textAlign:'center'}} className="my-3" >Add A Note</h1>
-      <form>
-  <div className="mb-3">
-    <label for="exampleInputEmail1" className="form-label">Title</label>
-    <input type="email" className="form-control" id="exampleInputEmail1" placeholder="Title"  aria-describedby="emailHelp"/>
-    <div id="emailHelp" className="form-text">Give a title to your notes</div>
-  </div>
-  <div className="mb-3">
-    <label for="exampleInputPassword1" className="form-label">Description</label>
-    <input type="text" className="form-control" id="exampleInputPassword1" placeholder="Description" />
-    <div id="emailHelp" className="form-text">Write your description here</div>
+  const context = useContext(noteContext);
+  const { addNote } = context;
+  const [note,setnote] = useState({title:"",description:""})
+  const handleChange = (e) => {
+    setnote({ ...note, [e.target.id]: e.target.value })
+  }
+  const handleClick = (e) => {
+    e.preventDefault();
+    addNote(note.title,note.description);
+  }
 
-  </div>
-  
-  <button type="submit" className="btn btn-primary">Save</button>
-</form>
+  return (
+    <div className="container" style={{ alignItems: "center", justifyContent: "center" }}>
+      <h1 style={{ textAlign: 'center' }} className="my-3">Add A Note</h1>
+      <form>
+        <div className="mb-3">
+          <label htmlFor="title" className="form-label">Title</label>
+          <input type="text" className="form-control" id="title" placeholder="Title" aria-describedby="emailHelp" onChange={handleChange} />
+          <div id="emailHelp" className="form-text">Give a title to your notes</div>
+        </div>
+        <div className="mb-3">
+          <label htmlFor="description" className="form-label">Description</label>
+          <input type="text" className="form-control" id="description" placeholder="Description" onChange={handleChange} />
+          <div id="emailHelp" className="form-text">Write your description here</div>
+        </div>
+        <button type="submit" className="btn btn-primary" onClick={handleClick}>Save</button>
+      </form>
+     <Note />
     </div>
-  )
+  );
 }
 
-export default Home
+export default Home;
