@@ -7,3 +7,12 @@ npm i -D nodemon
 
 
 
+npm i jsontwebtoken
+npm i bcrypt
+npm i expressvalidator 
+
+
+
+
+React 
+npm install react-router-dom concurrently 
