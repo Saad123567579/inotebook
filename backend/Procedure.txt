@@ -16,3 +16,6 @@ npm i expressvalidator
 
 React 
 npm install react-router-dom concurrently 
+
+
+npm install cors

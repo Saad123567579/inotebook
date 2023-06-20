@@ -4,6 +4,8 @@ import noteContext from '../context/Notes/noteContext';
 function Home() {
   const context = useContext(noteContext);
   const { addNote } = context;
+ 
+  
   const [note,setnote] = useState({title:"",description:""})
   const handleChange = (e) => {
     setnote({ ...note, [e.target.id]: e.target.value })
@@ -11,6 +13,9 @@ function Home() {
   const handleClick = (e) => {
     e.preventDefault();
     addNote(note.title,note.description);
+    document.getElementById('description').value="";
+    document.getElementById('title').value="";
+
   }
 
   return (
