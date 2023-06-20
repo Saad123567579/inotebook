@@ -17,7 +17,7 @@ function Signup() {
         })
         const json = await response.json();
         if (response.ok) {
-            localStorage.setItem('token', json.token); // Assuming the token is returned in the response
+            localStorage.setItem('token', json.authToken); // Assuming the token is returned in the response
             navigate('/');
           } 
 

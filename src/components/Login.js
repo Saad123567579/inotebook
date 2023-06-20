@@ -18,9 +18,9 @@ function Login() {
         body: JSON.stringify(credentials),
       });
       const json = await response.json();
-      console.log(json);
+    
       if (response.ok) {
-        localStorage.setItem('token', json.token); // Assuming the token is returned in the response
+        localStorage.setItem('token',json); // Assuming the token is returned in the response
         navigate('/');
       } else {
         alert('Invalid Credentials');
